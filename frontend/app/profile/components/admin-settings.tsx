@@ -57,6 +57,19 @@ const mockAdminData = [
 ];
 
 export function AdminSettings() {
+  const getAdminUrl = (setting: string) => {
+    switch (setting) {
+      case "Dashboard":
+        return `${Routes.ADMIN}?tab=dashboard`;
+      case "Students":
+        return `${Routes.ADMIN}?tab=students`;
+      case "Lessons":
+        return `${Routes.ADMIN}?tab=lessons`;
+      default:
+        return Routes.ADMIN;
+    }
+  };
+
   return (
     <Card className="md:col-span-2">
       <CardHeader>
@@ -100,7 +113,7 @@ export function AdminSettings() {
                     {item.status === "Disabled" ? (
                       <span className="text-gray-500">Configure</span>
                     ) : (
-                      <Link href={Routes.ADMIN}>Configure</Link>
+                      <Link href={getAdminUrl(item.setting)}>Configure</Link>
                     )}
                   </Button>
                 </TableCell>

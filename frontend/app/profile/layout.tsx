@@ -5,7 +5,7 @@ export default function ProfileLayout({
 }) {
   return (
     <div className="container mx-auto py-10 px-4">
-      <h1 className="text-2xl font-bold mb-6">Profile</h1>
+      <h1 className="text-2xl font-bold mb-6 text-center">Profile</h1>
       {children}
     </div>
   );

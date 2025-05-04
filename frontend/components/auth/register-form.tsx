@@ -52,7 +52,11 @@ export function RegisterForm() {
         userName: registerForm.getValues("userName"),
         role: decodedToken.role as Roles,
       });
-      router.push(Routes.HOME);
+      if (decodedToken.role === Roles.ADMIN) {
+        router.push(Routes.ADMIN);
+      } else {
+        router.push(Routes.PROFILE);
+      }
     },
   });
 
@@ -192,7 +196,7 @@ export function RegisterForm() {
 
           <Button
             type="submit"
-            className="w-full"
+            className="w-full cursor-pointer"
             disabled={registerMutation.isPending}
           >
             {registerMutation.isPending ? "Registering..." : "Register"}

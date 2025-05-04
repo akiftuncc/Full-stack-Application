@@ -46,7 +46,11 @@ export function LoginForm() {
         userName: loginForm.getValues("userName"),
         role: decodedToken.role as Roles,
       });
-      router.push(Routes.HOME);
+      if (decodedToken.role === Roles.ADMIN) {
+        router.push(Routes.ADMIN);
+      } else {
+        router.push(Routes.PROFILE);
+      }
     },
   });
 
@@ -109,7 +113,7 @@ export function LoginForm() {
 
           <Button
             type="submit"
-            className="w-full"
+            className="w-full cursor-pointer"
             disabled={loginMutation.isPending}
           >
             {loginMutation.isPending ? "Logging in..." : "Login"}

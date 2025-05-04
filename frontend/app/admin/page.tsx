@@ -3,10 +3,16 @@ import Students from "./components/students";
 import Lessons from "./components/lessons";
 import Dashboard from "./components/dashboard";
 
-export default function AdminPage() {
+export default function AdminPage({
+  searchParams,
+}: {
+  searchParams: { tab?: string };
+}) {
+  const defaultTab = searchParams.tab || "dashboard";
+
   return (
     <div className="container mx-auto p-6">
-      <Tabs defaultValue="dashboard" className="w-full">
+      <Tabs defaultValue={defaultTab} className="w-full">
         <TabsList className="grid w-full grid-cols-3 bg-muted">
           <TabsTrigger
             value="dashboard"

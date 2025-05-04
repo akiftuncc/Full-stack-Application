@@ -91,7 +91,9 @@ export default function LessonsPage() {
 
   return (
     <div className="container mx-auto py-10">
-      <h1 className="text-2xl font-bold mb-6 text-foreground">Lessons</h1>
+      <h1 className="text-2xl font-bold mb-6 text-foreground text-center">
+        Lessons
+      </h1>
 
       <LessonsTable
         lessons={lessons}
