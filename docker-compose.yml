@@ -1,0 +1,47 @@
+version: "3.9"
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: school
+    volumes:
+      - ./db-data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: nest-backend
+    depends_on:
+      - mysql
+    ports:
+      - "8080:3000"
+    environment:
+      - DATABASE_URL=mysql://root:root@mysql:3306/school
+      - JWT_SECRET=supersecret
+      - JWT_EXPIRES=1d
+      - PORT=3000
+      - NODE_ENV=production
+    command: sh -c "sleep 10 && yarn prisma generate && yarn prisma migrate deploy && node dist/src/main.js"
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    container_name: react-frontend
+    ports:
+      - "3000:3000"
+    command: sh -c "yarn build && yarn start"
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - REACT_APP_API_URL=http://localhost:3000
+      - PORT=3000
+
+volumes:
+  db-data:
